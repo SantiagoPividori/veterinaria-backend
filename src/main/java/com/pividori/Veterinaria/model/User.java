@@ -21,14 +21,16 @@ public class User {
     private String name;
     private String lastname;
     private String email;
+    private String password;
     private LocalDate dob;
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public User(String name, String lastname, String email, LocalDate dob, Role role) {
+    public User(String name, String lastname, String email, String password, LocalDate dob, Role role) {
         this.name = name;
         this.lastname = lastname;
         this.email = email;
+        this.password = password;
         this.dob = dob;
         this.role = role;
     }

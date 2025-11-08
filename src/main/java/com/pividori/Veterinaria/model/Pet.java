@@ -10,6 +10,7 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString
 public class Pet {
 
     @Id
@@ -24,7 +25,7 @@ public class Pet {
     @JoinColumn(name = "owner_id")
     private User owner;
 
-    public Pet(String name, LocalDate dob, String species, String breed, User owner){
+    public Pet(String name, LocalDate dob, String species, String breed, User owner) {
         this.name = name;
         this.dob = dob;
         this.species = species;
