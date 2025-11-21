@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface IUserRepository extends JpaRepository<User, Long> {
 
-    public User findByUsername(String username);
+    public User findUserByUsername(String username);
 
     /* This is the form of make a query in sql. Esta es la forma de hacer querys personalizadas.
     @Query("SELECT u FROM User u WHERE u.username = ?")

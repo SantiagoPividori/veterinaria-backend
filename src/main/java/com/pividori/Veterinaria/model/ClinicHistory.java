@@ -8,9 +8,11 @@ import java.time.LocalDate;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Getter
 @Setter
 @ToString
+@Table(name = "clinic_histories")
 public class ClinicHistory {
 
     @Id
@@ -20,8 +22,11 @@ public class ClinicHistory {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
+    @Column(nullable = false)
     private String diagnostic;
+    @Column(nullable = false)
     private String treatment;
+    @Column(name = "day_of_diagnostic", nullable = false)
     private LocalDate dod;
     @ManyToOne
     @JoinColumn(name = "veterinarian_id")

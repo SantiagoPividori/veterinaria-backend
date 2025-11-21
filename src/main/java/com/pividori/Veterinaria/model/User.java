@@ -7,13 +7,14 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-//TODO : PARA ROLES = Considerar utilizar FetchType.LAZY + @EntityGraph!
+//TODO : #PARA ROLES = Considerar utilizar FetchType.LAZY + @EntityGraph!
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
 @Table(name = "users")
 public class User {

@@ -10,16 +10,22 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @ToString
+@Table(name = "pets")
 public class Pet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
+    @Column(nullable = false)
     private String name;
+    @Column(name = "day_of_birth",nullable = false)
     private LocalDate dob;
+    @Column(nullable = false)
     private String species;
+    @Column(nullable = false)
     private String breed;
     @ManyToOne
     @JoinColumn(name = "owner_id")
