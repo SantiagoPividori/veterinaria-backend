@@ -1,0 +1,70 @@
+/* Contenedor principal */
+.login-container,
+.register-container {
+  max-width: 400px;
+  margin: 80px auto;
+  padding: 30px;
+  background: #f7f7f7;       /* Fondo gris claro */
+  border-radius: 12px;       /* Bordes redondeados */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Sombra suave */
+}
+
+/* Título */
+h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #333;
+  font-size: 24px;
+}
+
+/* Inputs */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 15px;
+  border: 1px solid #bbb;
+  border-radius: 8px;
+  font-size: 16px;
+  background: white;
+}
+
+/* Botón principal */
+button[type="submit"] {
+  width: 100%;
+  padding: 12px;
+  background: #007bff;       /* Azul */
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.25s ease;
+}
+
+button[type="submit"]:hover {
+  background: #0056b3;
+}
+
+/* Enlaces */
+a {
+  display: block;
+  text-align: center;
+  margin-top: 15px;
+  color: #007bff;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Errores */
+.error {
+  text-align: center;
+  color: #d9534f;
+  margin-top: 10px;
+  font-weight: bold;
+}
