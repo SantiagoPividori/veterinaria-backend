@@ -12,7 +12,38 @@ public class GlobalExceptionHandler {
     //When something controller throw exception to UserNotFoundException type, this controller take control.
     @ExceptionHandler
     public ResponseEntity<String> handleUserNotFound(UserNotFoundException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
     }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleRoleNotFound(RoleNotFoundException ex) {
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleUsernameAlreadyTaken(UsernameAlreadyTakenException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handleEmailAlreadyTaken(EmailAlreadyTakenException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<String> handlePasswordIncorrect(PaswordIncorrectException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
+                .body(ex.getMessage());
+    }
+
 
 }
