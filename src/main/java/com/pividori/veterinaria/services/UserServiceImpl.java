@@ -24,14 +24,13 @@ public class UserServiceImpl implements UserService {
     private final RoleService roleService;
 
     @Override
-    public UserResponse findUserByUsername(String username) {
+    public UserResponse findByUsername(String username) {
 
         User foundUser = userRepository
-                .findUserByUsername(username)
+                .findByUsername(username)
                 .orElseThrow(() -> {
                     log.warn("User {} not found", username);
                     return new UserNotFoundException("username", username);
-                    //Acá necesitamos el return porque como la lambda no es de una sola línea, necesitamos aclarar cual vamos a devolver DE LA LAMBDA.
                 });
 
         return UserMapper.toResponse(foundUser);
@@ -39,10 +38,10 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse findUserByEmail(String email) {
+    public UserResponse findByEmail(String email) {
 
         User foundUser = userRepository
-                .findUserByEmail(email)
+                .findByEmail(email)
                 .orElseThrow(() -> {
                     log.warn("Email {} is not found", email);
                     return new UserNotFoundException("email", email);
@@ -62,7 +61,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserResponse registerUser(CreateUserRequest createdUserRequest) {
+    public UserResponse register(CreateUserRequest createdUserRequest) {
 
         //Verificaciones.
         if (userRepository.existsByUsername(createdUserRequest.username())) {
@@ -79,11 +78,10 @@ public class UserServiceImpl implements UserService {
 
         User newUser = UserMapper.toEntity(createdUserRequest, defaultRole, passwordEncoder);
 
-        //Pasamos la referencia en memoria de la variable, por eso se modifica y no hace falta devolver nada.
         initializeSecurityFlags(newUser);
 
         User savedUser = userRepository.save(newUser);
-        log.info("Creating new user {}", savedUser.getUsername());
+        log.info("Created new user {}", savedUser.getUsername());
 
         return UserMapper.toResponse(savedUser);
 

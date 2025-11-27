@@ -29,7 +29,7 @@ public class AuthServiceImpl {
     private final UserDetailServiceImpl userDetailService;
 
     public TokenResponse register(RegisterRequest registerRequest) {
-        if (userRepository.findUserByUsername(registerRequest.username()).isPresent()) {
+        if (userRepository.findByUsername(registerRequest.username()).isPresent()) {
             throw new IllegalStateException("Username already taken");
         }
 

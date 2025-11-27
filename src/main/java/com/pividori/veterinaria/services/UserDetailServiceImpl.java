@@ -18,10 +18,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findUserByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
 //                .orElseThrow(() -> new UsernameNotFoundException("User not found: " + username));
 
-        if (user.getRoles() == null || user.getRoles().isEmpty()){
+        if (user.getRole() == null){
             throw new IllegalStateException("User has no roles: " + username);
         }
 

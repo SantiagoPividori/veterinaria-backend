@@ -9,10 +9,10 @@ import java.util.List;
 
 public interface UserService {
 
-    UserResponse findUserByUsername(String username);
+    UserResponse findByUsername(String username);
 
-    UserResponse findUserByEmail(String email);
+    UserResponse findByEmail(String email);
 
-    UserResponse registerUser(CreateUserRequest createdUserRequest);
+    UserResponse register(CreateUserRequest createdUserRequest);
 
 }
