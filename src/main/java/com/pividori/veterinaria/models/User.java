@@ -45,9 +45,10 @@ public class User {
     @Column(name = "credential_non_Expired", nullable = false)
     private boolean credentialNonExpired;
 
-    public User(String name, String lastname, String email, String password, LocalDate dob, Role role) {
+    public User(String name, String lastname, String username, String email, String password, LocalDate dob, Role role) {
         this.name = name;
         this.lastname = lastname;
+        this.username = username;
         this.email = email;
         this.password = password;
         this.dob = dob;

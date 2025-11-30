@@ -26,16 +26,16 @@ public class UserController {
         return ResponseEntity.created(URI.create("/user/" + user.id())).body(user);
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long userId) {
-        //return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(userId));
-        return ResponseEntity.ok(userService.getUserById(userId));
-    }
+//    @GetMapping("/{id}")
+//    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long userId) {
+//        //return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(userId));
+//        return ResponseEntity.ok(userService.finById(userId));
+//    }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<UserResponse>> getAllUsers(){
-        return ResponseEntity.ok(userService.getAllUsers());
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<UserResponse>> getAllUsers(){
+//        return ResponseEntity.ok(userService.getAllUsers());
+//    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long userId) {

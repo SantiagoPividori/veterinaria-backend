@@ -16,16 +16,15 @@ public class CustomerUserDetails implements UserDetails {
     private final User user;
     private final Set<GrantedAuthority> authorities = new HashSet<>();
 
-    public CustomerUserDetails(User user){
+    public CustomerUserDetails(User user) {
 
         this.user = user;
 
-        for (Role role : user.getRoles()){
-            authorities.add(new SimpleGrantedAuthority("ROLE_".concat(role.getRoleEnum().name())));
+        Role role = user.getRole();
 
-            for (Permission permission : role.getPermission()){
-                authorities.add(new SimpleGrantedAuthority("PERM".concat(permission.getName())));
-            }
+        for (Permission permission : role.getPermission()) {
+            authorities.add(new SimpleGrantedAuthority("PERM".concat(permission.getName())));
+
         }
 
     }
