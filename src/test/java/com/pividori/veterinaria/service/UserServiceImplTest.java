@@ -4,6 +4,7 @@ import com.pividori.veterinaria.dtos.ChangePasswordRequest;
 import com.pividori.veterinaria.dtos.UserResponse;
 import com.pividori.veterinaria.exceptions.PasswordEqualsException;
 import com.pividori.veterinaria.exceptions.PasswordIncorrectException;
+import com.pividori.veterinaria.exceptions.UserNotFoundException;
 import com.pividori.veterinaria.models.User;
 import com.pividori.veterinaria.repositorys.UserRepository;
 import com.pividori.veterinaria.services.UserServiceImpl;
@@ -42,7 +43,7 @@ public class UserServiceImplTest {
     @Nested
     class FindByUsernameTest {
         @Test
-        void findByUsername_shouldReturnUserResponse_whenUserExistInDB() {
+        void findByUsername_shouldReturnUserResponse_whenUserExist() {
 
             // Arrange
             String username = "pivissj";
@@ -60,7 +61,19 @@ public class UserServiceImplTest {
             assertEquals(username, userResponse.username());
         }
 
+        @Test
+        void findByUsername_shouldThrowUserNotFoundException_whenUserNotDoesExist() {
 
+            String username = "pivissj";
+
+            given(userRepository.findByUsername(username))
+                    .willReturn(Optional.empty());
+
+            assertThrows(UserNotFoundException.class,
+                    () -> userServiceImpl.findByUsername(username));
+            verify(userRepository).findByUsername(username);
+
+        }
     }
 
     @Nested
@@ -135,7 +148,8 @@ public class UserServiceImplTest {
             assertEquals("oldPassEncoded", user.getPassword());
 
             verify(userRepository).findById(user.getId());
-            verify(passwordEncoder).matches(changePasswordRequest.currentPassword(), user.getPassword());
+            verify(passwordEncoder)
+                    .matches(changePasswordRequest.currentPassword(), user.getPassword());
             //Verificamos que nunca se haga el encode y el save.
             verify(passwordEncoder, never()).encode(any(String.class));
             verify(userRepository, never()).save(any(User.class));
