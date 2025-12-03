@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.util.ReflectionTestUtils;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -112,6 +113,42 @@ public class UserServiceImplTest {
                     () -> userServiceImpl.findByEmail(email));
             verify(userRepository).findByEmail(email);
 
+        }
+
+    }
+
+    @Nested
+    class FindAll {
+
+        @Test
+        void findAll_shouldReturnListUserResponse_whenUsersExist() {
+
+            User user1 = new User();
+            user1.setUsername("pivissj");
+            User user2 = new User();
+            user2.setUsername("srdevon");
+
+            given(userRepository.findAll()).willReturn(List.of(user1, user2));
+
+            List<UserResponse> allUsers = userServiceImpl.findAll();
+
+            verify(userRepository).findAll();
+            assertNotNull(allUsers);
+            assertEquals(2, allUsers.size());
+            assertEquals("pivissj", allUsers.get(0).username());
+            assertEquals("srdevon", allUsers.get(1).username());
+        }
+
+        @Test
+        void findAll_shouldReturnEmptyList_whenUsersDoesNotExist() {
+
+            given(userRepository.findAll()).willReturn(List.of());
+
+            List<UserResponse> allUsers = userServiceImpl.findAll();
+
+            verify(userRepository).findAll();
+            assertNotNull(allUsers);
+            assertTrue(allUsers.isEmpty());
         }
 
     }
