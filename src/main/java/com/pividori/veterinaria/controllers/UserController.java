@@ -24,11 +24,11 @@ public class UserController {
         return ResponseEntity.created(URI.create("/user/" + user.id())).body(user);
     }
 
-//    @GetMapping("/{id}")
-//    public ResponseEntity<UserResponse> getUserById(@PathVariable("id") Long userId) {
-//        //return ResponseEntity.status(HttpStatus.OK).body(userService.getUserById(userId));
-//        return ResponseEntity.ok(userService.finById(userId));
-//    }
+    //ToDo: #Agregar el PreAuthorize con ADMIN.
+    @GetMapping("/byusername/{username}")
+    public ResponseEntity<UserResponse> findByUsername(@PathVariable("username") String username) {
+        return ResponseEntity.ok(userService.findByUsername(username));
+    }
 
     //ToDo: #Agregar el PreAuthorize con ADMIN y devolver un Plegable(investigar).
     @GetMapping
