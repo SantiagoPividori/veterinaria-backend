@@ -3,6 +3,7 @@ package com.pividori.veterinaria.controllers;
 import com.pividori.veterinaria.dtos.CreateUserRequest;
 import com.pividori.veterinaria.dtos.UserResponse;
 import com.pividori.veterinaria.services.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,17 +12,14 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
+@RequiredArgsConstructor
+@RequestMapping("/api/v1/users")
 public class UserController {
 
     private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-
     @PostMapping("/create")
-    public ResponseEntity<UserResponse> createUser(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest request) {
         UserResponse user = userService.register(request);
         return ResponseEntity.created(URI.create("/user/" + user.id())).body(user);
     }
@@ -32,19 +30,15 @@ public class UserController {
 //        return ResponseEntity.ok(userService.finById(userId));
 //    }
 
-//    @GetMapping("/all")
-//    public ResponseEntity<List<UserResponse>> getAllUsers(){
-//        return ResponseEntity.ok(userService.getAllUsers());
-//    }
+    //ToDo: #Agregar el PreAuthorize con ADMIN y devolver un Plegable(investigar).
+    @GetMapping
+    public ResponseEntity<List<UserResponse>> findAll(){
+        return ResponseEntity.ok(userService.findAll());
+    }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable("id") Long userId) {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-    /*@PostMapping
-    public ResponseEntity<UserResponse> saveUser(CreateUserRequest){
-        return ResponseEntity.ok()
-    }*/
 
 }
