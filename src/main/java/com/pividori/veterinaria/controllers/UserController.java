@@ -36,9 +36,11 @@ public class UserController {
         return ResponseEntity.ok(userService.findAll());
     }
 
-    @DeleteMapping("/delete/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long userId) {
-        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    //ToDo: #Agregar el PreAuthorize con ADMIN.
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable("id") Long id) {
+        userService.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
