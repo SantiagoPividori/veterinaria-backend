@@ -1,8 +1,11 @@
 package com.pividori.veterinaria.controllers;
 
 import com.pividori.veterinaria.dtos.CreateUserRequest;
+import com.pividori.veterinaria.dtos.UpdateUserRequest;
 import com.pividori.veterinaria.dtos.UserResponse;
 import com.pividori.veterinaria.services.UserService;
+import com.pividori.veterinaria.services.UserServiceImpl;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/create")
-    public ResponseEntity<UserResponse> register(@RequestBody CreateUserRequest request) {
+    public ResponseEntity<UserResponse> register(@RequestBody @Valid CreateUserRequest request) {
         UserResponse user = userService.register(request);
         return ResponseEntity.created(URI.create("/user/" + user.id())).body(user);
     }
@@ -43,4 +46,9 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    //ToDo: #Modificarlo para que solo pueda modificar los datos el mismo usuario, no cualquiera
+    @PatchMapping("/{id}")
+    public ResponseEntity<UserResponse> updateUser(@PathVariable("id") Long id, @RequestBody @Valid UpdateUserRequest request) {
+        return ResponseEntity.ok(userService.update(id, request));
+    }
 }
