@@ -1,6 +1,5 @@
-package com.pividori.veterinaria.securitys;
+package com.pividori.veterinaria.security;
 
-import com.pividori.veterinaria.services.UserDetailServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

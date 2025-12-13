@@ -6,7 +6,7 @@ import com.pividori.veterinaria.exceptions.PasswordEqualsException;
 import com.pividori.veterinaria.exceptions.PasswordIncorrectException;
 import com.pividori.veterinaria.exceptions.UserNotFoundException;
 import com.pividori.veterinaria.models.User;
-import com.pividori.veterinaria.repositorys.UserRepository;
+import com.pividori.veterinaria.repositories.UserRepository;
 import com.pividori.veterinaria.services.UserServiceImpl;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -1,4 +1,4 @@
-package com.pividori.veterinaria.repositorys;
+package com.pividori.veterinaria.repositories;
 
 import com.pividori.veterinaria.models.ClinicHistory;
 import org.springframework.data.jpa.repository.JpaRepository;

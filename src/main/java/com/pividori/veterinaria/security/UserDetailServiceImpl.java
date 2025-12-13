@@ -1,8 +1,7 @@
-package com.pividori.veterinaria.services;
+package com.pividori.veterinaria.security;
 
 import com.pividori.veterinaria.models.User;
-import com.pividori.veterinaria.repositorys.UserRepository;
-import com.pividori.veterinaria.securitys.CustomerUserDetails;
+import com.pividori.veterinaria.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +24,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new IllegalStateException("User has no roles: " + username);
         }
 
-        return new CustomerUserDetails(user);
+        return new CustomUserDetails(user);
 
     }
 }

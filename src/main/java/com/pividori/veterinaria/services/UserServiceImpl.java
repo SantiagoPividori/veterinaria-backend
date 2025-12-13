@@ -8,14 +8,13 @@ import com.pividori.veterinaria.exceptions.*;
 import com.pividori.veterinaria.mappers.UserMapper;
 import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.User;
-import com.pividori.veterinaria.repositorys.UserRepository;
+import com.pividori.veterinaria.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 
 //ToDo: #Añadir validaciónes.

@@ -1,6 +1,5 @@
-package com.pividori.veterinaria.securitys;
+package com.pividori.veterinaria.security;
 
-import com.pividori.veterinaria.services.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,12 +15,15 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtAuthFilter jwtAuthFilter;
 
     /*When an http request is made, it goes through these filters.
     HttpSecurity = A que podemos acceder? Controla los endpoints, las restricciones de los URLs.
@@ -34,8 +36,7 @@ public class SecurityConfig {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(http -> {
 //                    //Configure public endpoints
-                    http.requestMatchers(HttpMethod.POST, "/auth/login").permitAll();
-                    http.requestMatchers(HttpMethod.POST, "/auth/register").permitAll();
+                    http.requestMatchers(HttpMethod.POST, "/auth/**").permitAll();
 //                    //Configure private endpoints
 //                    http.requestMatchers(HttpMethod.GET, "/auth/holaPremium").hasAuthority("READ");
 //                    //Configure rest of endpoints
@@ -45,6 +46,7 @@ public class SecurityConfig {
 //                    http.anyRequest().denyAll();
                     })
                 .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
                 .build();
 
         }

@@ -1,4 +1,4 @@
-package com.pividori.veterinaria.repositorys;
+package com.pividori.veterinaria.repositories;
 
 import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.utility.RoleEnum;

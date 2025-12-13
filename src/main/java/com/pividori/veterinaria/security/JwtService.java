@@ -1,4 +1,4 @@
-package com.pividori.veterinaria.securitys;
+package com.pividori.veterinaria.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

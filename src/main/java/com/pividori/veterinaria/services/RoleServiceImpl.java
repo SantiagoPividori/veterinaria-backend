@@ -3,7 +3,7 @@ package com.pividori.veterinaria.services;
 import com.pividori.veterinaria.exceptions.RoleNotFoundException;
 import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.utility.RoleEnum;
-import com.pividori.veterinaria.repositorys.RoleRepository;
+import com.pividori.veterinaria.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

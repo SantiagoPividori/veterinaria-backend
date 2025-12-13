@@ -1,9 +1,7 @@
-package com.pividori.veterinaria.controllers;
+package com.pividori.veterinaria.auth;
 
 import com.pividori.veterinaria.dtos.LoginRequest;
 import com.pividori.veterinaria.dtos.RegisterRequest;
-import com.pividori.veterinaria.dtos.TokenResponse;
-import com.pividori.veterinaria.services.AuthServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -17,19 +15,19 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/register")
-    public ResponseEntity<TokenResponse> register(@RequestBody RegisterRequest registerRequest){
-        final TokenResponse tokenResponse = authService.register(registerRequest);
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest){
+        final AuthResponse tokenResponse = authService.register(registerRequest);
         return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/login")
-    public ResponseEntity<TokenResponse> login(@RequestBody LoginRequest loginRequest){
-        final TokenResponse tokenResponse = authService.login(loginRequest);
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
+        final AuthResponse tokenResponse = authService.login(loginRequest);
         return ResponseEntity.ok(tokenResponse);
     }
 
     @PostMapping("/refresh")
-    public TokenResponse refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader){
+    public AuthResponse refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader){
         return authService.refreshToken(authHeader);
     }
 

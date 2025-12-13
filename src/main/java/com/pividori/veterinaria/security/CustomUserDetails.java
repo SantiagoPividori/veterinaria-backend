@@ -1,37 +1,29 @@
-package com.pividori.veterinaria.securitys;
+package com.pividori.veterinaria.security;
 
-import com.pividori.veterinaria.models.Permission;
-import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.User;
+import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class CustomerUserDetails implements UserDetails {
+public class CustomUserDetails implements UserDetails {
 
+    @Getter
     private final User user;
     private final Set<GrantedAuthority> authorities = new HashSet<>();
 
-    public CustomerUserDetails(User user) {
-
+    public CustomUserDetails(User user) {
         this.user = user;
-
-        Role role = user.getRole();
-
-        for (Permission permission : role.getPermission()) {
-            authorities.add(new SimpleGrantedAuthority("PERM".concat(permission.getName())));
-
-        }
-
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authorities;
+        return List.of(new SimpleGrantedAuthority(user.getRole().getRoleEnum().name()));
     }
 
     @Override

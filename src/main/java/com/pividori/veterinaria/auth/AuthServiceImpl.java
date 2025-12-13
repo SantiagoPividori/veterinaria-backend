@@ -1,18 +1,21 @@
-package com.pividori.veterinaria.services;
+package com.pividori.veterinaria.auth;
 
 import com.pividori.veterinaria.dtos.LoginRequest;
 import com.pividori.veterinaria.dtos.RegisterRequest;
-import com.pividori.veterinaria.dtos.TokenResponse;
+import com.pividori.veterinaria.dtos.UserResponse;
+import com.pividori.veterinaria.mappers.UserMapper;
 import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.User;
 import com.pividori.veterinaria.models.utility.RoleEnum;
-import com.pividori.veterinaria.repositorys.RoleRepository;
-import com.pividori.veterinaria.repositorys.UserRepository;
-import com.pividori.veterinaria.securitys.CustomerUserDetails;
-import com.pividori.veterinaria.securitys.JwtService;
+import com.pividori.veterinaria.repositories.RoleRepository;
+import com.pividori.veterinaria.repositories.UserRepository;
+import com.pividori.veterinaria.security.CustomUserDetails;
+import com.pividori.veterinaria.security.JwtService;
+import com.pividori.veterinaria.security.UserDetailServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,7 @@ public class AuthServiceImpl {
     private final AuthenticationManager authenticationManager;
     private final UserDetailServiceImpl userDetailService;
 
-    public TokenResponse register(RegisterRequest registerRequest) {
+    public AuthResponse register(RegisterRequest registerRequest) {
         if (userRepository.findByUsername(registerRequest.username()).isPresent()) {
             throw new IllegalStateException("Username already taken");
         }
@@ -52,30 +55,31 @@ public class AuthServiceImpl {
 
         userRepository.save(newUser);
 
-        String token = jwtService.generateToken(new CustomerUserDetails(newUser));
-        String refreshToken = jwtService.generateRefreshToken(new CustomerUserDetails(newUser));
+        String token = jwtService.generateToken(new CustomUserDetails(newUser));
+        String refreshToken = jwtService.generateRefreshToken(new CustomUserDetails(newUser));
 
-        return new TokenResponse(token, refreshToken);
+        return new AuthResponse(token, refreshToken);
     }
 
-    public TokenResponse login(LoginRequest loginRequest) {
+    public AuthResponse login(LoginRequest request) {
 
-        var authToken = new UsernamePasswordAuthenticationToken(
-                loginRequest.username(),
-                loginRequest.password()
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.username(),
+                        request.password())
         );
 
-        authenticationManager.authenticate(authToken);
+        CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+        User user = customUserDetails.getUser();
 
-        UserDetails userDetails = userDetailService.loadUserByUsername(loginRequest.username());
+        String token = jwtService.generateToken(customUserDetails);
 
-        String accessToken = jwtService.generateToken(userDetails);
-        String refreshToken = jwtService.generateRefreshToken(userDetails);
+        UserResponse userResponse = UserMapper.toResponse(user);
 
-        return new TokenResponse(accessToken, refreshToken);
+        return new AuthResponse(token, " bearer", userResponse);
     }
 
-    public TokenResponse refreshToken(String authHeader) {
+    public AuthResponse refreshToken(String authHeader) {
 
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             throw new IllegalStateException("Invalid Authorization header");
@@ -100,6 +104,6 @@ public class AuthServiceImpl {
         String newAccessToken = jwtService.generateToken(userDetails);
 
         // devolver ambos tokens
-        return new TokenResponse(newAccessToken, refreshToken);
+        return new AuthResponse(newAccessToken, refreshToken);
     }
 }
