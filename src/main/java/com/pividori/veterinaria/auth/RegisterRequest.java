@@ -1,10 +1,10 @@
-package com.pividori.veterinaria.dtos;
+package com.pividori.veterinaria.auth;
 
 import jakarta.validation.constraints.*;
 
 import java.time.LocalDate;
 
-public record CreateUserRequest(
+public record RegisterRequest(
         @NotBlank(message = "Name is required")
         String name,
         @NotBlank(message = "Lastname is required")

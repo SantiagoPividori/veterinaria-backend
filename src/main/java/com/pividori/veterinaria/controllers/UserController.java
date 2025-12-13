@@ -1,17 +1,13 @@
 package com.pividori.veterinaria.controllers;
 
-import com.pividori.veterinaria.dtos.CreateUserRequest;
 import com.pividori.veterinaria.dtos.UpdateUserRequest;
 import com.pividori.veterinaria.dtos.UserResponse;
 import com.pividori.veterinaria.services.UserService;
-import com.pividori.veterinaria.services.UserServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController

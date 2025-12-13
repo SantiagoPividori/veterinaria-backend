@@ -1,5 +1,6 @@
 package com.pividori.veterinaria.services;
 
+import com.pividori.veterinaria.auth.RegisterRequest;
 import com.pividori.veterinaria.dtos.*;
 import com.pividori.veterinaria.exceptions.*;
 import com.pividori.veterinaria.mappers.UserMapper;

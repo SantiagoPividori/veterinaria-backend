@@ -1,4 +1,4 @@
-package com.pividori.veterinaria.dtos;
+package com.pividori.veterinaria.auth;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;

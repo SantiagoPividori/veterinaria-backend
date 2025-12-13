@@ -20,9 +20,9 @@ public class JwtService {
     @Value("${security.jwt.secret-key}")
     private String secretKey;
     @Value("${security.jwt.expiration}")
-    private long expirationMs;
+    private long accessTokenExpirationMs;
     @Value("${security.jwt.refresh.expiration}")
-    private long refreshExpirationMs;
+    private long refreshTokenExpirationMs;
 
     //Con este metodo transformamos el string a una key válida para utilizar
     private SecretKey getSigningKey(){
@@ -33,7 +33,7 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String generateToken(UserDetails userDetails) {
+    private String buildToken(UserDetails userDetails, long expirationMs) {
         return Jwts.builder()
                 //De quién es este token?
                 .subject(userDetails.getUsername())
@@ -71,13 +71,15 @@ public class JwtService {
                 .getPayload();
     }
 
-    private String generateRefreshToken(UserDetails userDetails) {
-        return Jwts.builder()
-                .subject(userDetails.getUsername())
-                .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + refreshExpirationMs))
-                .signWith(getSigningKey())
-                .compact();
+    public String generateAccessToken(UserDetails userDetails) {
+        return buildToken(userDetails, accessTokenExpirationMs);
     }
 
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(userDetails, refreshTokenExpirationMs);
+    }
+
+    public Long getAccessTokenExpirationInSeconds() {
+        return accessTokenExpirationMs / 1000;
+    }
 }

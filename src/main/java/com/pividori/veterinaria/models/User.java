@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.*;
 
+import java.time.Instant;
 import java.time.LocalDate;
 
 //TODO :
@@ -51,6 +52,11 @@ public class User {
     @JoinColumn(name = "role_id")
     @NotBlank(message = "Role is required")
     private Role role;
+    @Column(name = "refresh_token", nullable = false)
+    private String refreshToken;
+    @Column(name = "refresh_token_expiration", nullable = false)
+    private Instant refreshTokenExpiration;
+    @OneToOne(fetch = FetchType.EAGER)
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled;
     @Column(name = "account_non_Expired", nullable = false)

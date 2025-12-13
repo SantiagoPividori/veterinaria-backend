@@ -1,7 +1,6 @@
 package com.pividori.veterinaria.auth;
 
-import com.pividori.veterinaria.dtos.LoginRequest;
-import com.pividori.veterinaria.dtos.RegisterRequest;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
@@ -15,20 +14,18 @@ public class AuthController {
     private final AuthServiceImpl authService;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest){
-        final AuthResponse tokenResponse = authService.register(registerRequest);
-        return ResponseEntity.ok(tokenResponse);
+    public ResponseEntity<AuthResponse> register(@Valid @RequestBody RegisterRequest registerRequest){
+        return ResponseEntity.ok(authService.register(registerRequest));
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest){
-        final AuthResponse tokenResponse = authService.login(loginRequest);
-        return ResponseEntity.ok(tokenResponse);
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest loginRequest){
+        return ResponseEntity.ok(authService.login(loginRequest));
     }
 
     @PostMapping("/refresh")
-    public AuthResponse refreshToken(@RequestHeader(HttpHeaders.AUTHORIZATION) final String authHeader){
-        return authService.refreshToken(authHeader);
+    public ResponseEntity<AuthResponse> refreshToken(@Valid @RequestBody RefreshTokenRequest refreshTokenRequest){
+        return ResponseEntity.ok(authService.refreshToken(refreshTokenRequest));
     }
 
 }

@@ -1,7 +1,6 @@
 package com.pividori.veterinaria.mappers;
 
-import com.pividori.veterinaria.dtos.CreateUserRequest;
-import com.pividori.veterinaria.dtos.RegisterRequest;
+import com.pividori.veterinaria.auth.RegisterRequest;
 import com.pividori.veterinaria.dtos.UserResponse;
 import com.pividori.veterinaria.models.Role;
 import com.pividori.veterinaria.models.User;
