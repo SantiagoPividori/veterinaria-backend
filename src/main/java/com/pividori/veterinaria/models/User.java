@@ -1,7 +1,6 @@
 package com.pividori.veterinaria.models;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 import lombok.*;
 
 import java.time.Instant;
@@ -12,6 +11,7 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,51 +20,37 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // With this annotation generated automatically.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter(AccessLevel.NONE)
     private Long id;
     @Column(nullable = false)
-    @NotBlank(message = "Name is required")
     private String name;
     @Column(nullable = false)
-    @NotBlank(message = "Lastname is required")
     private String lastname;
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Username is required")
-    @Size(min = 3, max = 20, message = "Username must be 3-20 characters long")
     private String username;
     @Column(unique = true, nullable = false)
-    @NotBlank(message = "Email is required")
-    @Email(message = "Email is invalid")
     private String email;
-    @Column(nullable = false)
-    @NotBlank(message = "Password is required")
-    @Pattern(
-            regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&#._-])[A-Za-z\\d@$!%*?&#._-]{8,64}$",
-            message = "Password must be 8-64 characters long and include at least one lowercase letter, one uppercase letter, one digit and one special character"
-    )
+    @Column(nullable = false, length = 100)
+    @ToString.Exclude
     private String password;
-    @Column(name = "day_of_birth", nullable = false)
-    @NotNull(message = "Date of birth is required")
-    @Past
+    @Column(name = "date_of_birth", nullable = false)
     private LocalDate dob;
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
-    @NotBlank(message = "Role is required")
     private Role role;
     @Column(name = "refresh_token", nullable = false)
     private String refreshToken;
-    @Column(name = "refresh_token_expiration", nullable = false)
+    @Column(name = "refresh_token_expiration_at", nullable = false)
     private Instant refreshTokenExpirationAt;
-    @OneToOne(fetch = FetchType.EAGER)
     @Column(name = "is_enabled", nullable = false)
     private boolean isEnabled;
-    @Column(name = "account_non_Expired", nullable = false)
+    @Column(name = "account_non_expired", nullable = false)
     private boolean accountNonExpired;
-    @Column(name = "account_non_Locked", nullable = false)
+    @Column(name = "account_non_locked", nullable = false)
     private boolean accountNonLocked;
-    @Column(name = "credential_non_Expired", nullable = false)
-    private boolean credentialNonExpired;
+    @Column(name = "credentials_non_expired", nullable = false)
+    private boolean credentialsNonExpired;
 
     public User(String name, String lastname, String username, String email, String password, LocalDate dob, Role role) {
         this.name = name;
@@ -76,4 +62,15 @@ public class User {
         this.role = role;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User other)) return false;
+        return id != null && id.equals(other.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
