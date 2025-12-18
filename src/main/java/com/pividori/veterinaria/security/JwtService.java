@@ -4,6 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,13 @@ public class JwtService {
     @Value("${security.jwt.refresh.expiration}")
     private long refreshTokenExpirationInMs;
 
+    private static final String CLAIM_TYPE = "type";
+    private static final String CLAIM_ROLE = "role";
+    private static final String TYPE_ACCESS = "access";
+    private static final String TYPE_REFRESH = "refresh";
+
     //Con este metodo transformamos el string a una key válida para utilizar
-    private SecretKey getSigningKey(){
+    private SecretKey getSigningKey() {
         //Pasamos él string a un array de bytes porque los algoritmos de firma trabajan con byte no con string
         byte[] keyBytes = secretKey.getBytes(StandardCharsets.UTF_8);
         //Es un helper de JJWT que arma un objeto Key compatible con HMAC(HS256).
@@ -34,23 +40,36 @@ public class JwtService {
     }
 
     private String buildToken(UserDetails userDetails, long expirationMs, String tokenType) {
-        return Jwts.builder()
+
+        Date now = new Date();
+        Date exp = new Date(now.getTime() + expirationMs);
+        String role = userDetails.getAuthorities().stream()
+                .findFirst()
+                .map(GrantedAuthority::getAuthority)
+                .orElse(null);
+
+        var builder = Jwts.builder()
                 //De quién es este token?
                 .subject(userDetails.getUsername())
                 //Claim es una parte del payload, que sería toda la información que mandamos, entonces esta es una parte de toda la información.
-                .claim("role", userDetails.getAuthorities().iterator().next().getAuthority())
-                .claim("type", tokenType)
+                .claim(CLAIM_TYPE, tokenType)
                 //Cuando creamos él token
-                .issuedAt(new Date(System.currentTimeMillis()))
+                .issuedAt(now)
                 //Cuando expira el token
-                .expiration(new Date(System.currentTimeMillis() + expirationMs))
+                .expiration(exp)
                 //Firmado con: getSigningKey(), que sería nuestra secret key.
-                .signWith(getSigningKey())
-                //¿Resultado? Un string con toda la información.
+                .signWith(getSigningKey());
+        //¿Resultado? Un string con toda la información.
+
+        if (TYPE_REFRESH.equals(tokenType)) {
+            return builder.compact();
+        }
+
+        return builder.claim(CLAIM_ROLE, role)
                 .compact();
     }
 
-    public String extractUsername(String token){
+    public String extractUsername(String token) {
         //Con esto leemos el sub del token. El sub sería el subject(de quien es el token)
         return extractAllClaims(token).getSubject();
     }
@@ -73,11 +92,11 @@ public class JwtService {
     }
 
     public String generateAccessToken(UserDetails userDetails) {
-        return buildToken(userDetails, tokenExpirationInMs, "access_token");
+        return buildToken(userDetails, tokenExpirationInMs, TYPE_ACCESS);
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(userDetails, refreshTokenExpirationInMs, "refresh_token");
+        return buildToken(userDetails, refreshTokenExpirationInMs, TYPE_REFRESH);
     }
 
     public Long getTokenExpirationInMs() {
