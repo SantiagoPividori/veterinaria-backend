@@ -33,12 +33,13 @@ public class JwtService {
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    private String buildToken(UserDetails userDetails, long expirationMs) {
+    private String buildToken(UserDetails userDetails, long expirationMs, String tokenType) {
         return Jwts.builder()
                 //De quién es este token?
                 .subject(userDetails.getUsername())
                 //Claim es una parte del payload, que sería toda la información que mandamos, entonces esta es una parte de toda la información.
                 .claim("role", userDetails.getAuthorities().iterator().next().getAuthority())
+                .claim("type", tokenType)
                 //Cuando creamos él token
                 .issuedAt(new Date(System.currentTimeMillis()))
                 //Cuando expira el token
@@ -72,11 +73,11 @@ public class JwtService {
     }
 
     public String generateAccessToken(UserDetails userDetails) {
-        return buildToken(userDetails, tokenExpirationInMs);
+        return buildToken(userDetails, tokenExpirationInMs, "access_token");
     }
 
     public String generateRefreshToken(UserDetails userDetails) {
-        return buildToken(userDetails, refreshTokenExpirationInMs);
+        return buildToken(userDetails, refreshTokenExpirationInMs, "refresh_token");
     }
 
     public Long getTokenExpirationInMs() {
