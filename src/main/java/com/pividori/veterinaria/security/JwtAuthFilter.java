@@ -1,5 +1,6 @@
 package com.pividori.veterinaria.security;
 
+import io.jsonwebtoken.JwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -38,10 +39,16 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             return;
         }
 
+        String username;
         //Extraemos el token del header sacando el Bearer ("Bearer ".length()=7)
         final String jwt = authHeader.substring(7);
-        //Extraemos el username del token
-        final String username = jwtService.extractUsername(jwt);
+        try {
+            //Extraemos el username del token en un try catch por la probabilidad de reventar si no tenemos subject.
+             username = jwtService.extractUsername(jwt);
+        } catch (JwtException e) {
+            filterChain.doFilter(request, response);
+            return;
+        }
 
         //Verificamos que hayamos leído el username y vemos que todavía no hay usuario autenticado para esta request
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
@@ -50,7 +57,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             UserDetails userDetails = userDetailService.loadUserByUsername(username);
 
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            if (jwtService.isAccessToken(jwt)) {
                 //Creamos el objeto UsernamePasswordAuthenticationToken que sería la representación de usuario autenticado
                 UsernamePasswordAuthenticationToken authenticationToken =
                         new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());

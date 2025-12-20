@@ -1,6 +1,7 @@
 package com.pividori.veterinaria.auth;
 
 import com.pividori.veterinaria.exceptions.InvalidRefreshTokenException;
+import com.pividori.veterinaria.exceptions.UserNotFoundException;
 import com.pividori.veterinaria.mappers.UserMapper;
 import com.pividori.veterinaria.models.User;
 import com.pividori.veterinaria.repositories.UserRepository;
@@ -79,18 +80,25 @@ public class AuthServiceImpl {
     public AuthResponse refreshToken(RefreshTokenRequest refreshTokenRequest) {
 
         String refreshToken = refreshTokenRequest.refreshToken();
+        final String username = jwtService.extractUsername(refreshToken);
+        String jti = jwtService.extractJti(refreshToken);
 
-        User user = userRepository.findByRefreshToken(refreshToken)
-                .orElseThrow(InvalidRefreshTokenException::new);
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new UserNotFoundException("username", username));
 
         if (user.getRefreshTokenExpirationAt() == null || user.getRefreshTokenExpirationAt().isBefore(Instant.now())) {
             throw new InvalidRefreshTokenException();
         }
 
         // validar refresh token
-        if (!jwtService.isTokenValid(refreshToken, new CustomUserDetails(user))) {
+        if (!jwtService.isRefreshToken(refreshToken)) {
             throw new InvalidRefreshTokenException();
         }
+
+        if (!jti.equals(user.getRefreshTokenJti())) {
+            throw new InvalidRefreshTokenException();
+        }
+
 
         // 4) Generar nuevo access token
         CustomUserDetails customUserDetails = new CustomUserDetails(user);

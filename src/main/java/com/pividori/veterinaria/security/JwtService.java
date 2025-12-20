@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import javax.crypto.SecretKey;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.UUID;
 
 //TODO: #Poner la SECRET_KEY en una variable de entorno.
 
@@ -46,7 +47,7 @@ public class JwtService {
         String role = userDetails.getAuthorities().stream()
                 .findFirst()
                 .map(GrantedAuthority::getAuthority)
-                .orElse(null);
+                .orElseThrow(() -> new IllegalStateException("User has no authorities"));
 
         var builder = Jwts.builder()
                 //De quién es este token?
@@ -74,9 +75,23 @@ public class JwtService {
         return extractAllClaims(token).getSubject();
     }
 
-    public boolean isTokenValid(String token, UserDetails userDetails) {
-        final String username = extractUsername(token);
-        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+    private boolean isTokenValid(String token, String tokenType) {
+        try {
+            Claims claims = extractAllClaims(token);
+            String type = (String) claims.get(CLAIM_TYPE);
+
+            return tokenType.equals(type) && claims.getExpiration().after(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean isAccessToken(String token) {
+        return isTokenValid(token, TYPE_ACCESS);
+    }
+
+    public boolean isRefreshToken(String token) {
+        return isTokenValid(token, TYPE_REFRESH);
     }
 
     private boolean isTokenExpired(String token) {
