@@ -1,7 +1,5 @@
 package com.pividori.veterinaria.dtos;
 
-import com.pividori.veterinaria.models.Role;
-
 import java.time.LocalDate;
 
 public record UserResponse(
@@ -11,6 +9,6 @@ public record UserResponse(
         String username,
         String email,
         LocalDate dob,
-        Role role
+        String role
 ) {
 }

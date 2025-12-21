@@ -15,7 +15,7 @@ public final class UserMapper {
                 user.getUsername(),
                 user.getEmail(),
                 user.getDob(),
-                user.getRole());
+                user.getRole().getRoleEnum().name());
     }
 
     public static User fromRegisterRequest(RegisterRequest registerRequest) {
