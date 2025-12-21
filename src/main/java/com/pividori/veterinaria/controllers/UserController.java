@@ -10,18 +10,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static com.pividori.veterinaria.api.ApiPath.API_V1;
+
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/users")
+@RequestMapping(API_V1 + "/users")
 public class UserController {
 
     private final UserService userService;
-
-//    @PostMapping("/create")
-//    public ResponseEntity<UserResponse> register(@RequestBody @Valid CreateUserRequest request) {
-//        UserResponse user = userService.register(request);
-//        return ResponseEntity.created(URI.create("/user/" + user.id())).body(user);
-//    }
 
     //ToDo: #Agregar el PreAuthorize con ADMIN.
     @GetMapping("/byusername/{username}")

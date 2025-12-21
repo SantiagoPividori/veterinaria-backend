@@ -2,12 +2,13 @@ package com.pividori.veterinaria.auth;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import static com.pividori.veterinaria.api.ApiPath.API_V1;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping(API_V1 + "/auth")
 @RequiredArgsConstructor
 public class AuthController {
 
