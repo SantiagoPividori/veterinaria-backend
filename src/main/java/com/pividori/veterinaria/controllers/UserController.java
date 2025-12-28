@@ -6,8 +6,10 @@ import com.pividori.veterinaria.services.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 import static com.pividori.veterinaria.api.ApiPaths.API_V1;
@@ -18,6 +20,11 @@ import static com.pividori.veterinaria.api.ApiPaths.API_V1;
 public class UserController {
 
     private final UserService userService;
+
+    @GetMapping("/me")
+    public ResponseEntity<UserResponse> getCurrentUser(@AuthenticationPrincipal Principal principal) {
+        return ResponseEntity.ok(userService.findByUsername(principal.getName()));
+    }
 
     //ToDo: #Agregar el PreAuthorize con ADMIN.
     @GetMapping("/byusername/{username}")
