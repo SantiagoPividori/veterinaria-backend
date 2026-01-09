@@ -2,13 +2,13 @@ package com.pividori.veterinaria.auth;
 
 import com.pividori.veterinaria.shared.exceptions.InvalidRefreshTokenException;
 import com.pividori.veterinaria.shared.exceptions.UserNotFoundException;
-import com.pividori.veterinaria.clinics.user.infrastucture.in.mappers.UserMapper;
-import com.pividori.veterinaria.clinics.user.domain.User;
-import com.pividori.veterinaria.clinics.user.infrastucture.out.UserRepository;
+import com.pividori.veterinaria.clinic.user.infrastructure.in.mappers.UserMapper;
+import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.clinic.user.infrastructure.out.UserRepository;
 import com.pividori.veterinaria.shared.security.CustomUserDetails;
 import com.pividori.veterinaria.shared.security.JwtService;
 import com.pividori.veterinaria.shared.security.SecurityConstants;
-import com.pividori.veterinaria.clinics.user.application.UserServiceImpl;
+import com.pividori.veterinaria.clinic.user.application.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

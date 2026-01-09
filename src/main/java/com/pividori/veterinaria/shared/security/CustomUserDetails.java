@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.shared.security;
 
-import com.pividori.veterinaria.clinics.user.domain.User;
+import com.pividori.veterinaria.clinic.user.domain.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

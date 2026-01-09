@@ -1,7 +1,7 @@
 package com.pividori.veterinaria.shared.security;
 
-import com.pividori.veterinaria.clinics.user.domain.User;
-import com.pividori.veterinaria.clinics.user.infrastucture.out.UserRepository;
+import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.clinic.user.infrastructure.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

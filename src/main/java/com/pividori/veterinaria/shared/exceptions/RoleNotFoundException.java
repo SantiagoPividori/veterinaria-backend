@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.shared.exceptions;
 
-import com.pividori.veterinaria.clinics.user.domain.RoleEnum;
+import com.pividori.veterinaria.clinic.user.domain.RoleEnum;
 
 public class RoleNotFoundException extends RuntimeException {
 
