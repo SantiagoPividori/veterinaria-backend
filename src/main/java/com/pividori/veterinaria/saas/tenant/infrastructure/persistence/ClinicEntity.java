@@ -1,10 +1,12 @@
 package com.pividori.veterinaria.saas.tenant.infrastructure.persistence;
 
-import com.pividori.veterinaria.saas.tenant.domain.ClinicStatus;
+import com.pividori.veterinaria.saas.tenant.domain.*;
+import com.pividori.veterinaria.shared.UserId;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.Instant;
+import java.time.ZoneId;
 
 @Entity
 @Getter
@@ -16,16 +18,18 @@ import java.time.Instant;
 @Table(name = "clinics")
 public class ClinicEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter(AccessLevel.NONE)
-    private Long id;
-    @Column(name = "name", nullable = false)
-    private String name;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "status", nullable = false)
+    private final ClinicId id;
+    private ClinicName name;
+    private ClinicLegalName legalName;
+    private ClinicCuit cuit;
+    private ClinicEmail email;
+    private ClinicPhoneNumber phoneNumber;
+    private ClinicAddress address;
     private ClinicStatus status;
-    @Column(name = "created_at", nullable = false)
-    private Instant createdAt;
+    private PlanType planType;
+    private final UserId ownerId;
+    private ZoneId timeZone;
+    private final Instant createdAt;
+    private Instant updatedAt;
 
 }
