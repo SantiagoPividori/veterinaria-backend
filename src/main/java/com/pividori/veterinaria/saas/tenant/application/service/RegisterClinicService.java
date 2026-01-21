@@ -21,7 +21,7 @@ public class RegisterClinicService implements RegisterClinicUseCase {
 
     @Override
     @Transactional
-    public RegisterClinicResult registerClinic(RegisterClinicCommand registerClinicCommand) {
+    public RegisterClinicResult register(RegisterClinicCommand registerClinicCommand) {
         Instant now = Instant.now(clock);
         Clinic clinicSaved = clinicRepositoryPort.save(Clinic.register(registerClinicCommand.name(), now));
         return new RegisterClinicResult(clinicSaved.getId());

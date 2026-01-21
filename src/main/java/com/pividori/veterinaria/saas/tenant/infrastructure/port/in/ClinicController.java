@@ -22,7 +22,7 @@ public class ClinicController {
     @PostMapping("/register")
     public RegisterClinicResponse registerClinic(@Valid @RequestBody RegisterClinicRequest registerClinicRequest) {
         RegisterClinicResult registerClinicResult =
-                registerClinicUseCase.registerClinic(ClinicWebMapper.toRegisterClinicCommand(registerClinicRequest));
+                registerClinicUseCase.register(ClinicWebMapper.toRegisterClinicCommand(registerClinicRequest));
         return ClinicWebMapper.toRegisterClinicResponse(registerClinicResult);
     }
 

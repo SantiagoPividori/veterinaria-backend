@@ -1,7 +1,7 @@
 package com.pividori.veterinaria.clinic.clinichistory.domain;
 
 import com.pividori.veterinaria.clinic.pet.domain.Pet;
-import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,9 +32,9 @@ public class ClinicHistory {
     private LocalDate dod;
     @ManyToOne
     @JoinColumn(name = "veterinarian_id")
-    private User veterinarian;
+    private UserEntity veterinarian;
 
-    public ClinicHistory(Pet pet, String diagnostic, String treatment, LocalDate dod, User veterinarian) {
+    public ClinicHistory(Pet pet, String diagnostic, String treatment, LocalDate dod, UserEntity veterinarian) {
         this.pet = pet;
         this.diagnostic = diagnostic;
         this.treatment = treatment;

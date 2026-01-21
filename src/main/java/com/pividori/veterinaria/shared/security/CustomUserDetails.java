@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.shared.security;
 
-import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,10 +14,10 @@ import java.util.Set;
 public class CustomUserDetails implements UserDetails {
 
     @Getter
-    private final User user;
+    private final UserEntity user;
     private final Set<GrantedAuthority> authorities = new HashSet<>();
 
-    public CustomUserDetails(User user) {
+    public CustomUserDetails(UserEntity user) {
         this.user = user;
     }
 

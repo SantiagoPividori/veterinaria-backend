@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.clinic.pet.domain;
 
-import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,9 +30,9 @@ public class Pet {
     private String breed;
     @ManyToOne
     @JoinColumn(name = "owner_id")
-    private User owner;
+    private UserEntity owner;
 
-    public Pet(String name, LocalDate dob, String species, String breed, User owner) {
+    public Pet(String name, LocalDate dob, String species, String breed, UserEntity owner) {
         this.name = name;
         this.dob = dob;
         this.species = species;

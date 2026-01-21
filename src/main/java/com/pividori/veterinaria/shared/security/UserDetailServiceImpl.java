@@ -1,7 +1,7 @@
 package com.pividori.veterinaria.shared.security;
 
-import com.pividori.veterinaria.clinic.user.domain.User;
-import com.pividori.veterinaria.clinic.user.infrastructure.out.UserRepository;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
+import com.pividori.veterinaria.identity.infrastructure.port.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -17,7 +17,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        User user = userRepository.findByUsername(username)
+        UserEntity user = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found: " + username));
 
         if (user.getRole() == null) {

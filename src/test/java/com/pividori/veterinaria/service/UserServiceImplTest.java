@@ -1,13 +1,11 @@
 package com.pividori.veterinaria.service;
 
-import com.pividori.veterinaria.clinic.user.infrastructure.in.dtos.ChangePasswordRequest;
-import com.pividori.veterinaria.clinic.user.infrastructure.in.dtos.UserResponse;
 import com.pividori.veterinaria.shared.exceptions.PasswordEqualsException;
 import com.pividori.veterinaria.shared.exceptions.PasswordIncorrectException;
 import com.pividori.veterinaria.shared.exceptions.UserNotFoundException;
-import com.pividori.veterinaria.clinic.user.domain.User;
-import com.pividori.veterinaria.clinic.user.infrastructure.out.UserRepository;
-import com.pividori.veterinaria.clinic.user.application.UserServiceImpl;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
+import com.pividori.veterinaria.identity.infrastructure.port.out.UserRepository;
+import com.pividori.veterinaria.identity.application.service.UserService;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -41,7 +39,7 @@ public class UserServiceImplTest {
 
     //Es la clase real que vamos a testear e inyecta los mocks anteriores.
     @InjectMocks
-    private UserServiceImpl userServiceImpl;
+    private UserService userServiceImpl;
 
     @Nested
     class FindByUsernameTest {
@@ -50,7 +48,7 @@ public class UserServiceImplTest {
 
             // Arrange
             String username = "pivissj";
-            User user = new User();
+            UserEntity user = new UserEntity();
             user.setUsername(username);
 
             given(userRepository.findByUsername(username))
@@ -87,7 +85,7 @@ public class UserServiceImplTest {
         void findByEmail_shouldReturnUserResponse_whenUserExist() {
 
             String email = "pividori@ejemplo.com";
-            User user = new User();
+            UserEntity user = new UserEntity();
             user.setEmail(email);
 
             given(userRepository.findByEmail(email))
@@ -123,9 +121,9 @@ public class UserServiceImplTest {
         @Test
         void findAll_shouldReturnListUserResponse_whenUsersExist() {
 
-            User user1 = new User();
+            UserEntity user1 = new UserEntity();
             user1.setUsername("pivissj");
-            User user2 = new User();
+            UserEntity user2 = new UserEntity();
             user2.setUsername("srdevon");
 
             given(userRepository.findAll()).willReturn(List.of(user1, user2));
@@ -160,7 +158,7 @@ public class UserServiceImplTest {
         void deleteById_shouldDeleteUser_whenUserExist() {
 
             Long id = 1L;
-            User user = new User();
+            UserEntity user = new UserEntity();
             ReflectionTestUtils.setField(user, "id", id);
 
             given(userRepository.findById(id))
@@ -183,7 +181,7 @@ public class UserServiceImplTest {
                     () -> userServiceImpl.deleteById(id));
 
             verify(userRepository).findById(id);
-            verify(userRepository, never()).delete(any(User.class));
+            verify(userRepository, never()).delete(any(UserEntity.class));
             verifyNoMoreInteractions(userRepository);
         }
     }
@@ -194,7 +192,7 @@ public class UserServiceImplTest {
         void changePassword_shouldChangePassword_whenCurrentIsCorrectAndNewIsDifferent() {
             // Creamos las variables necesarias para el test.
             ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("oldPass", "newPass");
-            User user = new User();
+            UserEntity user = new UserEntity();
             // Esto lo utilizamos porque no tenemos set en ID en la clase User, con esto seteamos el ID del user solo en el test.
             ReflectionTestUtils.setField(user, "id", 1L);
             user.setUsername("pivissj");
@@ -216,7 +214,7 @@ public class UserServiceImplTest {
                     .willReturn(newPassEncoded);
 
             // Cuando haga save de cualquier User class al repository, devuélveme, de la invocación (invocation), el argumento 0.
-            given(userRepository.save(any(User.class)))
+            given(userRepository.save(any(UserEntity.class)))
                     //willAnswer para que ejecute lógica, con willReturn solo devuelve algo.
                     .willAnswer(invocation -> invocation.getArgument(0));
 
@@ -240,7 +238,7 @@ public class UserServiceImplTest {
         void changePassword_shouldThrowPasswordIncorrectException_whenCurrentIsDifferent() {
 
             ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("oldPass", "newPass");
-            User user = new User();
+            UserEntity user = new UserEntity();
             ReflectionTestUtils.setField(user, "id", 1L);
             user.setUsername("pivissj");
             user.setPassword("oldPassEncoded");
@@ -264,7 +262,7 @@ public class UserServiceImplTest {
                     .matches(changePasswordRequest.currentPassword(), user.getPassword());
             //Verificamos que nunca se haga el encode y el save.
             verify(passwordEncoder, never()).encode(any(String.class));
-            verify(userRepository, never()).save(any(User.class));
+            verify(userRepository, never()).save(any(UserEntity.class));
         }
 
         @Test
@@ -272,7 +270,7 @@ public class UserServiceImplTest {
 
             //Variables necesarias.
             ChangePasswordRequest changePasswordRequest = new ChangePasswordRequest("oldPass", "oldPass");
-            User user = new User();
+            UserEntity user = new UserEntity();
             ReflectionTestUtils.setField(user, "id", 1L);
             user.setUsername("pivissj");
             user.setPassword("oldPassEncoded");
@@ -289,7 +287,7 @@ public class UserServiceImplTest {
                     () -> userServiceImpl.changePassword(user.getId(), changePasswordRequest));
             assertEquals("oldPassEncoded", user.getPassword());
             verify(passwordEncoder, never()).encode(any(String.class));
-            verify(userRepository, never()).save(any(User.class));
+            verify(userRepository, never()).save(any(UserEntity.class));
         }
     }
 }

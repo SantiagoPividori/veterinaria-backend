@@ -2,7 +2,6 @@ package com.pividori.veterinaria.clinic.appointment.application;
 
 import com.pividori.veterinaria.clinic.appointment.infrastructure.in.dtos.AppointmentResponse;
 import com.pividori.veterinaria.clinic.appointment.infrastructure.out.AppointmentRepository;
-import com.pividori.veterinaria.clinic.user.application.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

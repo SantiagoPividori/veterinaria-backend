@@ -1,7 +1,7 @@
 package com.pividori.veterinaria.clinic.appointment.domain;
 
 import com.pividori.veterinaria.clinic.pet.domain.Pet;
-import com.pividori.veterinaria.clinic.user.domain.User;
+import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,14 +28,14 @@ public class Appointment {
     private Pet pet;
     @ManyToOne
     @JoinColumn(name = "veterinarian_id")
-    private User veterinarian;
+    private UserEntity veterinarian;
     @Column(nullable = false)
     private String reasonConsultation;
     @Enumerated(EnumType.STRING)
     @Column(name = "state_turn")
     private StateEnum stateTurn;
 
-    public Appointment(LocalDateTime dot, Pet pet, User veterinarian, String reasonConsultation) {
+    public Appointment(LocalDateTime dot, Pet pet, UserEntity veterinarian, String reasonConsultation) {
         this.dot = dot;
         this.pet = pet;
         this.veterinarian = veterinarian;
@@ -43,7 +43,7 @@ public class Appointment {
         this.stateTurn = StateEnum.RESERVED;
     }
 
-    public Appointment(LocalDateTime dot, Pet pet, User veterinarian, String reasonConsultation, StateEnum stateTurn) {
+    public Appointment(LocalDateTime dot, Pet pet, UserEntity veterinarian, String reasonConsultation, StateEnum stateTurn) {
         this.dot = dot;
         this.pet = pet;
         this.veterinarian = veterinarian;

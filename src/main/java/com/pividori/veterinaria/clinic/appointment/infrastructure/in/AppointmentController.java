@@ -17,17 +17,4 @@ public class AppointmentController {
 
     private final AppointmentService appointmentService;
 
-    //Ver turnos propios
-    @GetMapping
-    public ResponseEntity<List<AppointmentResponse>> getAppointments(@AuthenticationPrincipal Principal user) {
-        return ResponseEntity.ok(appointmentService.getAppointments(Principal user));
-    }
-
-    //Ver turnos ajenos
-    //Agendar turnos propios
-    //Agendar turnos ajenos
-    //Cancelar turnos propios
-    //Cancelar turnos ajenos
-
-
 }
