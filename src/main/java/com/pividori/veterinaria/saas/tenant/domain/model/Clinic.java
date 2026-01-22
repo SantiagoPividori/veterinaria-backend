@@ -136,9 +136,15 @@ public class Clinic {
         if (status.canUpdateContactInfo()) {
             throw new DomainException("Contact info cannot be updated in current status");
         }
-        if (newEmail != null) { this.email = newEmail; }
-        if (newPhoneNumber != null) { this.phoneNumber = newPhoneNumber; }
-        if (newAddress != null) { this.address = newAddress; }
+        if (newEmail != null) {
+            this.email = newEmail;
+        }
+        if (newPhoneNumber != null) {
+            this.phoneNumber = newPhoneNumber;
+        }
+        if (newAddress != null) {
+            this.address = newAddress;
+        }
         touch();
     }
 
