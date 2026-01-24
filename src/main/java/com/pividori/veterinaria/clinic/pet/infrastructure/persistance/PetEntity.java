@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.clinic.pet.infrastructure.persistance;
 
-import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
+import com.pividori.veterinaria.saas.iam.infrastructure.persistence.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 

@@ -1,8 +1,8 @@
 package com.pividori.veterinaria.saas.tenant.application.service;
 
-import com.pividori.veterinaria.saas.tenant.application.port.in.RegisterClinicCommand;
-import com.pividori.veterinaria.saas.tenant.application.port.in.RegisterClinicResult;
-import com.pividori.veterinaria.saas.tenant.application.port.in.RegisterClinicUseCase;
+import com.pividori.veterinaria.saas.tenant.application.port.in.command.RegisterClinicCommand;
+import com.pividori.veterinaria.saas.tenant.application.port.in.result.RegisterClinicResult;
+import com.pividori.veterinaria.saas.tenant.application.port.in.usecase.RegisterClinicUseCase;
 import com.pividori.veterinaria.saas.tenant.application.port.out.ClinicRepositoryPort;
 import com.pividori.veterinaria.saas.tenant.domain.model.Clinic;
 import lombok.RequiredArgsConstructor;

@@ -1,8 +1,10 @@
 package com.pividori.veterinaria.saas.tenant.infrastructure.persistence.mapper;
 
-import com.pividori.veterinaria.saas.tenant.domain.*;
+import com.pividori.veterinaria.saas.tenant.domain.enums.ClinicStatus;
+import com.pividori.veterinaria.saas.tenant.domain.enums.PlanType;
 import com.pividori.veterinaria.saas.tenant.domain.model.Clinic;
-import com.pividori.veterinaria.saas.tenant.infrastructure.persistence.ClinicEntity;
+import com.pividori.veterinaria.saas.tenant.domain.valueobject.*;
+import com.pividori.veterinaria.saas.tenant.infrastructure.persistence.entity.ClinicEntity;
 import com.pividori.veterinaria.shared.UserId;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

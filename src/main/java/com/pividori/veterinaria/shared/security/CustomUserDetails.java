@@ -1,6 +1,6 @@
 package com.pividori.veterinaria.shared.security;
 
-import com.pividori.veterinaria.identity.infrastructure.persistence.UserEntity;
+import com.pividori.veterinaria.saas.iam.infrastructure.persistence.entity.UserEntity;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

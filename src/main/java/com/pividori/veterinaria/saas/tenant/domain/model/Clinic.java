@@ -1,6 +1,8 @@
 package com.pividori.veterinaria.saas.tenant.domain.model;
 
-import com.pividori.veterinaria.saas.tenant.domain.*;
+import com.pividori.veterinaria.saas.tenant.domain.enums.ClinicStatus;
+import com.pividori.veterinaria.saas.tenant.domain.enums.PlanType;
+import com.pividori.veterinaria.saas.tenant.domain.valueobject.*;
 import com.pividori.veterinaria.shared.UserId;
 import com.pividori.veterinaria.shared.exceptions.DomainException;
 
@@ -23,19 +25,8 @@ public class Clinic {
     private final Instant createdAt;
     private Instant updatedAt;
 
-    public Clinic(ClinicId id,
-                  ClinicName name,
-                  ClinicLegalName legalName,
-                  ClinicCuit cuit,
-                  ClinicEmail email,
-                  ClinicPhoneNumber phoneNumber,
-                  ClinicAddress address,
-                  ClinicStatus status,
-                  PlanType planType,
-                  UserId ownerId,
-                  ZoneId timeZone,
-                  Instant createdAt,
-                  Instant updatedAt) {
+    public Clinic(ClinicId id, ClinicName name, ClinicLegalName legalName, ClinicCuit cuit, ClinicEmail email, ClinicPhoneNumber phoneNumber,
+                  ClinicAddress address, ClinicStatus status, PlanType planType, UserId ownerId, ZoneId timeZone, Instant createdAt, Instant updatedAt) {
         this.id = id;
         this.name = name;
         this.legalName = legalName;
@@ -52,14 +43,8 @@ public class Clinic {
     }
 
 
-    public static Clinic create(ClinicName name,
-                                ClinicLegalName legalName,
-                                ClinicCuit cuit,
-                                ClinicEmail email,
-                                ClinicPhoneNumber phoneNumber,
-                                ClinicAddress address,
-                                PlanType planType,
-                                UserId ownerId) {
+    public static Clinic create(ClinicName name, ClinicLegalName legalName, ClinicCuit cuit, ClinicEmail email,
+                                ClinicPhoneNumber phoneNumber, ClinicAddress address, PlanType planType, UserId ownerId) {
         Instant now = Instant.now();
         return new Clinic(
                 ClinicId.generate(),
@@ -78,12 +63,8 @@ public class Clinic {
         );
     }
 
-    public static Clinic create(ClinicName name,
-                                ClinicLegalName legalName,
-                                ClinicCuit cuit,
-                                ClinicEmail email,
-                                PlanType planType,
-                                UserId ownerId) {
+    public static Clinic create(ClinicName name, ClinicLegalName legalName, ClinicCuit cuit,
+                                ClinicEmail email, PlanType planType, UserId ownerId) {
         Instant now = Instant.now();
         return new Clinic(
                 ClinicId.generate(),
@@ -102,19 +83,9 @@ public class Clinic {
         );
     }
 
-    public static Clinic reconstitute(ClinicId id,
-                                      ClinicName name,
-                                      ClinicLegalName legalName,
-                                      ClinicCuit cuit,
-                                      ClinicEmail email,
-                                      ClinicPhoneNumber phoneNumber,
-                                      ClinicAddress address,
-                                      ClinicStatus status,
-                                      PlanType planType,
-                                      UserId ownerId,
-                                      ZoneId timeZone,
-                                      Instant createdAt,
-                                      Instant updatedAt) {
+    public static Clinic reconstitute(ClinicId id, ClinicName name, ClinicLegalName legalName, ClinicCuit cuit, ClinicEmail email,
+                                      ClinicPhoneNumber phoneNumber, ClinicAddress address, ClinicStatus status,
+                                      PlanType planType, UserId ownerId, ZoneId timeZone, Instant createdAt, Instant updatedAt) {
         return new Clinic(
                 id,
                 name,
