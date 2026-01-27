@@ -30,7 +30,7 @@ public class ClinicController {
 
         RegisterClinicCommand registerClinicCommand = clinicWebMapper.toRegisterClinicCommand(registerClinicRequest);
 
-        RegisterClinicResult registerClinicResult = registerClinicUseCase.register(registerClinicCommand);
+        RegisterClinicResult registerClinicResult = registerClinicUseCase.execute(registerClinicCommand);
 
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest()
