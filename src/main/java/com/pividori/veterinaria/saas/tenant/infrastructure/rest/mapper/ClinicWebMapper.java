@@ -10,7 +10,24 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface ClinicWebMapper {
 
-    @Mapping()
+    /*   Usuario   */
+    @Mapping(target = "ownerEmail", source = "ownerEmail")
+    @Mapping(target = "ownerPassword", source = "ownerPassword")
+    @Mapping(target = "ownerFirstName", source = "ownerFirstName")
+    @Mapping(target = "ownerLastName", source = "ownerLastName")
+    @Mapping(target = "ownerBirthDate", source = "ownerBirthDate")
+    /*   Clínica   */
+    @Mapping(target = "name", source = "name")
+    @Mapping(target = "legalName", source = "legalName")
+    @Mapping(target = "cuit", source = "cuit")
+    @Mapping(target = "email", source = "email")
+    @Mapping(target = "phoneNumber", source = "phoneNumber")
+    @Mapping(target = "street", source = "street")
+    @Mapping(target = "city", source = "city")
+    @Mapping(target = "province", source = "province")
+    @Mapping(target = "postalCode", source = "postalCode")
+    @Mapping(target = "planType", source = "planType")
+    @Mapping(target = "timeZone", source = "timeZone")
     RegisterClinicCommand toRegisterClinicCommand(RegisterClinicRequest registerClinicRequest);
 
     RegisterClinicResponse toRegisterClinicResponse(RegisterClinicResult registerClinicResult);

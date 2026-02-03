@@ -53,12 +53,22 @@ public class UserEntity {
     @Column(name = "credentials_non_expired", nullable = false)
     private boolean credentialsNonExpired;
 
-    public UserEntity(String firstname, String lastname, String email, String password, LocalDate dob) {
+    public UserEntity(String firstname, String lastname, String email, String password, LocalDate dob, String role, boolean active, Instant createdAt,
+                      String refreshTokenJti, Instant refreshTokenExpirationAt, boolean isEnable, boolean accountNonExpired, boolean accountNonLocked, boolean credentialsNonExpired) {
         this.firstname = firstname;
         this.lastname = lastname;
         this.email = email;
         this.password = password;
         this.dob = dob;
+        this.role = role;
+        this.active = active;
+        this.createdAt = createdAt;
+        this.refreshTokenJti = refreshTokenJti;
+        this.refreshTokenExpirationAt = refreshTokenExpirationAt;
+        this.isEnabled = isEnable;
+        this.accountNonExpired = accountNonExpired;
+        this.accountNonLocked = accountNonLocked;
+        this.credentialsNonExpired = credentialsNonExpired;
     }
 
     @Override

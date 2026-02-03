@@ -75,4 +75,43 @@ public class User {
         this.password = newPassword;
     }
 
+    public UserId getId() {
+        return id;
+    }
+
+    public UserEmail getEmail() {
+        return email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserName getFirstName() {
+        return firstName;
+    }
+
+    public UserName getLastName() {
+        return lastName;
+    }
+
+    public BirthDate getBirthDate() {
+        return birthDate;
+    }
+
+    public UserRole getRole() {
+        return role;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public Instant getCreatedAt() {
+        return createdAt;
+    }
+
+    public Instant getUpdatedAt() {
+        return updatedAt;
+    }
 }

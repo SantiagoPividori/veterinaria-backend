@@ -4,5 +4,5 @@ import com.pividori.veterinaria.saas.tenant.application.port.in.command.Register
 import com.pividori.veterinaria.saas.tenant.application.port.in.result.RegisterClinicResult;
 
 public interface RegisterClinicUseCase {
-    RegisterClinicResult register(RegisterClinicCommand registerClinicCommand);
+    RegisterClinicResult execute(RegisterClinicCommand registerClinicCommand);
 }

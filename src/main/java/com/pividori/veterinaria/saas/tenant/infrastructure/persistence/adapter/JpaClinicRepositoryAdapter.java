@@ -13,11 +13,12 @@ import org.springframework.stereotype.Repository;
 public class JpaClinicRepositoryAdapter implements ClinicRepositoryPort {
 
     private final SpringDataClinicRepository springDataClinicRepository;
+    private final ClinicPersistenceMapper clinicPersistenceMapper;
 
     @Override
     public Clinic save(Clinic clinic) {
-        ClinicEntity clinicEntity = ClinicPersistenceMapper.toClinicEntity(clinic);
-        return ClinicPersistenceMapper.fromClinicEntity(springDataClinicRepository.save(clinicEntity));
+        ClinicEntity clinicEntity = clinicPersistenceMapper.toEntity(clinic);
+        return clinicPersistenceMapper.toDomain(springDataClinicRepository.save(clinicEntity));
     }
 
 }

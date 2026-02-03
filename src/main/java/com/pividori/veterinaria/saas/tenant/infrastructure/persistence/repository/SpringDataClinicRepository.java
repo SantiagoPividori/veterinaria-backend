@@ -3,5 +3,7 @@ package com.pividori.veterinaria.saas.tenant.infrastructure.persistence.reposito
 import com.pividori.veterinaria.saas.tenant.infrastructure.persistence.entity.ClinicEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SpringDataClinicRepository extends JpaRepository<ClinicEntity, Long> {
+import java.util.UUID;
+
+public interface SpringDataClinicRepository extends JpaRepository<ClinicEntity, UUID> {
 }

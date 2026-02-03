@@ -8,7 +8,7 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface UserPersistenceMapper {
 
-    @Mapping(source = "")
+    @Mapping(source = "nashe", target = "nashe")
     default UserEntity toUserEntity(User user) {
         return null;
     }
